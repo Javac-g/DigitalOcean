@@ -1,0 +1,34 @@
+ssh -i ~/digital_ocean root@ ipadress - public ip / to login into your server
+
+mkdir -p /var/www/html/ 
+scp -i ~/digital_ocean site.zip root@192.********:/var/www/html/
+
+chmod -R 755 /var/www/html/
+sudo apt update
+sudo apt install apache2
+sudo systemctl status apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
+sudo chown -R www-data:www-data /var/www/html/
+sudo chmod -R 755 /var/www/html/
+sudo nano /etc/apache2/sites-available/mysite.conf
+<VirtualHost *:80>
+    ServerAdmin admin@maksym-denysov.dev
+    DocumentRoot /var/www/html
+    ServerName maksym-denysov.dev 
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+sudo a2ensite mysite.conf
+sudo systemctl reload apache2
+sudo a2dissite 000-default.conf
+sudo systemctl reload apache2
+
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw reload
+
+sudo apt install certbot python3-certbot-apache -y
+sudo certbot --apache -d yourdomain.com -d www.yourdomain.com
+
+
