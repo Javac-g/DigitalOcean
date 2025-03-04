@@ -1,5 +1,5 @@
 ssh -i ~/digital_ocean root@ ipadress - public ip / to login into your server
-
+/////////////////
 mkdir -p /var/www/html/ 
 scp -i ~/digital_ocean site.zip root@192.********:/var/www/html/
 
